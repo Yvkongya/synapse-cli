@@ -1,0 +1,26 @@
+# Build outputs
+target/
+*.jar
+*.war
+*.class
+dependency-reduced-pom.xml
+
+# IDE
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime data
+synapse_memory/
+synapse_memory.json
+synapse_config.json
+
+# Logs
+*.log
