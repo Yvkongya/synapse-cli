@@ -208,7 +208,7 @@ private boolean autoApprove(String toolName, String args) {
 Synapse CLI  ←→  MCP Server（外部进程）
                      ↓
                 JSON-RPC 2.0 over stdin/stdout
-                
+
 消息格式:
 Content-Length: {len}\r\n\r\n{json}
 
@@ -331,65 +331,7 @@ synapse_memory/
 
 ---
 
-## 五、面试准备 Q&A
-
-### Q1: 你这个和 LangChain4j 有什么区别？
-> 我从零实现了完整的 Agent 执行链路：tools 参数构建 → 发送 LLM → 解析 tool_calls → 调度工具 → 结果回注。LangChain4j 封装了这些细节，遇到问题时你不知道底层怎么工作的。
-
-### Q2: 为什么不做成 Web 应用？
-> Agent 的定位是开发工具。CLI 交互（输入指令→看到思考过程→看到工具执行→看到结果）比 Web 更高效。Claude Code、Qoder CLI 都是命令行。
-
-### Q3: MCP 协议你是怎么实现的？
-> 基于 JSON-RPC 2.0 协议，通过进程的 stdin/stdout 通信。先握手（initialize），再获取工具列表（tools/list），最后调用工具（tools/call）。消息格式是 `Content-Length` + 换行 + JSON 体。
-
-### Q4: Multi-Agent 的三个角色怎么分工？
-> Planner 拆解任务为步骤列表，Worker 逐步骤复用 ReactEngine 执行，Reviewer 检查执行质量。三个角色使用不同的 System Prompt，专注各自职责。
-
-### Q5: 记忆系统是怎么设计的？
-> 四分类文件存储（preferences/tasks/knowledge/chat）。启动加载到内存，每次操作实时写盘，每类最多 50 条自动淘汰旧数据。输出到 System Prompt 时每类最多展示 5 条。
-
-### Q6: 你这个在实际场景中能做什么？
-> 联网搜索并整理资料、审查代码质量、自动生成日报、读写文件、集成 MCP 工具（GitHub/浏览器/数据库）。本质是一个可编程的 AI 助手。
-
----
-
-
-## 六、简历写法
-
-### 项目经历（简历版）
-
-> **Agent CLI — 自研 Java Agent Harness**
->
-> 从零实现的命令行 AI Agent 执行引擎，纯 Java 手写，不依赖 LangChain4j 等框架。
->
-> **核心工作：**
->
-> - **自研 ReAct 决策循环**：基于 Function Calling API 实现 tool_calls 解析与工具调度，工具串行执行确保交互稳定性
->
-> - **MCP 协议客户端**：基于 JSON-RPC 2.0 手写 MCP 客户端，支持 stdio 传输，可连接 GitHub/浏览器等外部工具
->
-> - **Multi-Agent 编排**：Planner 拆任务 + Worker 执行 + Reviewer 验证，三角色分工协作
->
-> - **HITL 三级审批 + Auto 权限**：自动/确认/危险三级权限控制，Auto 模式用 LLM 语义判断操作合理性
->
-> - **安全边界**：文件操作限制工作目录内，命令执行白名单 + shell 操作符拦截，配置文件防覆盖
->
-### 面试常见问题
-
-### 技术亮点速查
-
-| 亮点 | 面试话术 |
-|---|---|
-| ReAct + Function Calling | 手写实现，能说清 tools 构建→tool_calls 解析全链路 |
-| MCP 协议 | JSON-RPC 2.0，Agent 可连接任意外部工具 |
-| Multi-Agent | Planner/Worker/Reviewer 三角色分工 |
-| Skill 系统 | YAML 定义 + 文件加载，参考 Anthropic Skills |
-| HITL 审批 | 三级权限，参考 Claude Code permission model |
-| 纯 Java CLI | 一个 java -jar 搞定，无端口无浏览器无数据库 |
-
----
-
-## 七、启动方式
+## 五、启动方式
 
 ```bash
 cd E:\Coding_Software\Java\Main_Project\synapse-cli

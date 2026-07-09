@@ -24,3 +24,12 @@ synapse_config.json
 
 # Logs
 *.log
+
+# Local AI config
+.claude/
+
+# IDE temp
+.reasonix/
+
+# Docs
+INTERVIEW_PREP.md
